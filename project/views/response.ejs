@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Confirmation Page</title>
+</head>
+<body style="border:3px solid orange">
+
+	
+
+	  <div class="bar bar-header bar-light" >
+            <a href="/close"><img src="public/bit.png" style="max-height:100%;max-width:40px"></a>
+            <h2 class="title" style="margin-left:80px;margin-top:20px; display: inline">BookInTown Ticket Details</h2>
+        </div>	
+		
+	<center><h1><%= status %></h1></center>
+    <center><h2> Please save screen for future reference </h2></center>
+		<form method="post" name="f1"> 
+		<table border="1">
+			<tbody>
+				
+				<tr>
+					<td><label>Movie</label></td>
+					<td><label><%= ticketData['movie'] %> </label></td>
+				</tr>
+				<tr>
+					<td><label>Theatre Name</label></td>
+					<td><label><%= ticketData['theatre'] %> </label></td>
+				</tr>
+				<tr>
+					<td><label>Date</label></td>
+					<td><label><%= ticketData['date'].toString().substring(0,10) %> </label></td>
+				</tr>
+				<tr>
+					<td><label>Show Time</label></td>
+					<td><label><%= ticketData['time'] %> </label></td>
+				</tr>
+				<tr>
+					<td><label>Seats</label></td>
+					<td><label><%= ticketData['seatNames'] %> </label></td>
+				</tr><tr>
+					<td><label>Payment Status</label></td>
+					<td><label><%= paramlist['STATUS'] %> </label></td>
+				</tr><tr>
+					<td><label>Amount</label></td>
+					<td><label><%= paramlist['TXNAMOUNT'] %> Rs </label></td>
+				</tr>
+				<tr>
+					<td><label>BookInTown booking Id</label></td>
+					<td><label><%= ticketData['bookingId'] %> </label></td>
+				</tr>
+				
+				
+			
+			</tbody>
+		</table>
+
+	</form>
+	 <a href="/close" ><button>Close</button></a>
+	
+</body>
+</html>

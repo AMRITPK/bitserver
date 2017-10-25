@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="http://cdn.muicss.com/mui-0.9.3/css/mui.css" />
+    <script src="http://cdn.muicss.com/mui-0.9.3/js/mui.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+ <script type="text/javascript">
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
+ var OrderFormController = function ($scope)
+{
+  // Initialize the model variables
+  $scope.check = true;
+  $scope.tick = true;
+  $scope.name = "";
+  $scope.mobile = "";
+  $scope.email = "";
+  $scope.noOfSeats=<%= movieDetails.noOfSeats %>;
+  $scope.amount="Rs "+<%= movieDetails.noOfSeats %>*120;
+  $scope.details=false;
+$scope.showDetails=function(){
+	if(!$scope.details)
+		$scope.details=true;
+	else
+		$scope.details=false;
+}
+  // Define utility functions
+  $scope.save = function ()
+  {
+  console.log($scope.name);
+  console.log($scope.mobile);
+  console.log($scope.email);
+  if( $scope.name && $scope.mobile ){
+	if($scope.mobile.length<10){
+		 console.log("not try to submit");
+		$scope.error="Please enter valid mobile number";
+	}else{
+		document.forms["form1"].submit();
+	console.log("try to submit");
+	}
+
+  }else{
+  console.log("not try to submit");
+	$scope.error="Please enter your name and mobile/email";
+  }
+    return true;
+  };
+  
+};
+
+
+
+
+ </script>
+ 
+    <style>
+      /* Add font-smoothing */
+      html,
+      body,
+      input,
+      textarea,
+      buttons {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+      }
+	  
+	.head1 {
+
+  display: inline-block;
+ 
+  height: 50px;
+  margin: 1em;
+}
+.head1 h1{
+display: inline-block;
+font-size: 20px;
+
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: #000;
+    font-weight: 500;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    line-height: 1.2;
+}
+h2{
+    margin: 0 0 2px 0;
+    font-size: 18px;
+    font-weight: normal;
+	color:black;
+	} 
+h2 a{
+    margin: 0 0 2px 0;
+    font-size: 18px;
+    font-weight: normal;
+	color:black;
+	} 	
+    </style>
+  </head>
+  <body style="border:3px solid orange">
+  <div class="bar bar-header bar-light" >
+            <a href="/close"><img src="public/bit.png" style="max-height:100%;max-width:40px"></a>
+            <h2 class="title" style="margin-left:80px;margin-top:20px; display: inline">Confirm Details</h2>
+        </div>
+    <!-- example starts here -->
+<div ng-app ng-controller="OrderFormController">
+<form  name="form1" method="post" action="#" >
+  
+  <h4>Enter the contact details</h4>
+  
+  <div class="mui-textfield mui-textfield--float-label">
+    <input type="text" name="name" maxlength="20" ng-model="name" value='<%= movieDetails.name %>' > 
+    <label>Name</label>
+	<span style="margin-left:50px;color:red"  ng-show="!name">Please enter the name</span>
+  </div>  
+   <div class="mui-textfield mui-textfield--float-label">
+    +91 <input type="text"  maxlength="10"  onkeypress="return isNumber(event)" name="mobile" ng-model="mobile" value='<%= movieDetails.mobile %>' >
+    <label>Mobile</label>
+	<span style="margin-left:5px;color:red"  >{{error}}</span>
+	<span style="margin-left:50px;color:red"  ng-show="!mobile">Please enter the mobile number <br/></span>
+  </div>   
+  <div class="mui-textfield mui-textfield--float-label">
+    <input type="text" maxlength="100" name="email" ng-model="email" value='<%= movieDetails.email %>' >
+    <label>Email</label>
+  </div>  
+
+   <div class="mui-textfield mui-textfield--float-label">
+    <input type="text" ng-model='noOfSeats' value='<%= movieDetails.noOfSeats %>' disabled>
+    <label>No Of Seats</label>
+  </div>  
+  <div class="mui-textfield mui-textfield--float-label">
+    <input type="text" value='<%= movieDetails.movie %>' disabled>
+    <label>Movie</label>
+  </div>  
+  <div class="mui-textfield mui-textfield--float-label">
+    <input type="text" value='<%= movieDetails.theatre %>' disabled>
+    <label>Theatre</label>
+  </div>  
+  <div class="mui-textfield mui-textfield--float-label">
+    <input type="text" value='<%= movieDetails.date%>' disabled>
+    <label>Date</label>
+  </div>
+  <div class="mui-textfield mui-textfield--float-label">
+    <input type="text" value='<%= movieDetails.time %>' disabled>
+    <label>Time</label>
+  </div>
+    <div class="mui-textfield mui-textfield--float-label">
+    <input type="text" value="Rs {{noOfSeats*120}}"  disabled>
+    <label>Total Amount</label>
+    <a ng-click="showDetails()" >Amount Break Up</a> 
+	
+  </div>
+  
+  
+  
+  <div ng-show="details" >
+  
+	   <div class="mui-textfield mui-textfield--float-label">
+		<input type="text" value="Rs {{noOfSeats*79.16}}"  disabled>
+		<label>Base Rate</label>
+	  </div>
+	   <div class="mui-textfield mui-textfield--float-label">
+		<input type="text" value="Rs {{noOfSeats*15.84}}"    disabled>
+		<label>ENT Tax</label>
+	  </div>
+	   <div class="mui-textfield mui-textfield--float-label">
+		<input type="text" value="Rs {{noOfSeats*3}}"    disabled>
+		<label>CESS Charge</label>
+	  </div>
+	   <div class="mui-textfield mui-textfield--float-label">
+		<input type="text" value="Rs {{noOfSeats*2}}"   disabled>
+		<label>Service Charge</label>
+	  </div>
+	   <div class="mui-textfield mui-textfield--float-label">
+		<input type="text" value="Rs {{noOfSeats*20}}"    disabled>
+		<label>Internet Handling Fee</label>
+	  </div>
+	   <div class="mui-textfield mui-textfield--float-label">
+		<input type="text" value="Rs {{noOfSeats*120}}"  disabled>
+		<label>Total Rate</label>
+	  </div>
+  </div>
+  			<div style="display:none">
+				
+					<input id="CUST_ID" tabindex="2" maxlength="12" size="12" name="CUST_ID" autocomplete="off" value="test"></td>
+				<input id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="12" size="12" name="INDUSTRY_TYPE_ID" autocomplete="off" value='<%= config.INDUSTRY_TYPE_ID %>'><input id="CHANNEL_ID" tabindex="4" maxlength="12"
+						size="12" name="CHANNEL_ID" autocomplete="off" value='<%= config.CHANNEL_ID %>'>
+					<input title="TXN_AMOUNT" tabindex="10"
+						type="text" name="TXN_AMOUNT"
+						value="{{noOfSeats*120}}">
+					<input title="MID" tabindex="10"
+						type="text" name="MID"
+						value='<%= config.MID %>'">
+					<input title="WEBSITE" tabindex="10"
+						type="text" name="WEBSITE"
+						value='<%= config.WEBSITE %>'><input title="WEBSITE" tabindex="10"
+						type="text" name="PAYTM_MERCHANT_KEY"
+						value='<%= config.PAYTM_MERCHANT_KEY %>'>
+			</div>		
+				
+					
+ 
+</form>
+ <input style="margin-left:10px" type="checkbox" ng-model="check" name="vehicle" value="Bike"><a href="http://www.bookintown.com/terms.html" >&nbsp;I agree to the terms and conditions</a>
+ </input>
+ </br>
+ <input style="margin-left:10px" type="checkbox" ng-model="tick"  name="tick" >&nbsp;I agree to collect the ticket from special online ticket counter 
+ </input>
+
+ <span style="margin-left:10px;color:red"  ng-show="!check"></br>&nbsp;Please agree to the terms and conditions</span>
+ <span style="margin-left:10px;color:red"  ng-show="!tick"></br>&nbsp;Please agree to collect the ticket</span>
+</br>
+ <button ng-hide="name && mobile && check && tick"  class="mui-btn mui-btn--raised" >Continue To Payment</button>
+ <button ng-hide="!(name && mobile && check && tick)" style="background:#32CD32" ng-click="save()"  class="mui-btn mui-btn--raised" >Continue To Payment</button>
+<!-- <a href="/close"><button  class="mui-btn mui-btn--raised" >Close</button></a> -->
+<div style="background-color: green">
+</div>
+  </div>
+
+    <!-- example ends here -->
+  </body>
+</html>
